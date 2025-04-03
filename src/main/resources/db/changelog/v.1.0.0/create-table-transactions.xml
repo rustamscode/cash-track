@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="create-table-transactions" author="Rustamscode">
+        <createTable tableName="transactions"
+                     remarks="Stores data about financial transactions">
+
+            <column name="id" type="UUID"
+                    remarks="Transaction ID (UUID)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_transactions"/>
+            </column>
+
+            <column name="amount" type="NUMERIC(10, 2)"
+                    remarks="Transaction amount">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="currency" type="VARCHAR(255)"
+                    remarks="Transaction currency">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="type" type="VARCHAR(255)"
+                    remarks="Transaction type">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="comment" type="VARCHAR(1000)"
+                    remarks="Transaction Comment. Isn't required">
+            </column>
+
+            <column name="status" type="VARCHAR(255)"
+                    remarks="Transaction Status">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="UUID"
+                    remarks="Transaction owner. FK users(id)">
+                <constraints nullable="false" foreignKeyName="fk_transactions_user"
+                             referencedTableName="users" referencedColumnNames="id"/>
+            </column>
+
+            <column name="created_date" type="TIMESTAMPTZ"
+                    remarks="Transaction date and time">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_modified_date" type="TIMESTAMP"
+                    remarks="Transaction last modified date">
+            </column>
+
+            <column name="version" type="BIGINT"
+                    remarks="Version for optimistic locking (JPA)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
