@@ -39,6 +39,10 @@
                     remarks="User last modified date">
             </column>
 
+            <column name="is_deleted" type="BOOLEAN"
+                    remarks="Transaction deletion status for soft deletes">
+            </column>
+
             <column name="version" type="BIGINT"
                     remarks="Version for optimistic locking (JPA)">
                 <constraints nullable="false"/>
