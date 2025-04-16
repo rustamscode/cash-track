@@ -30,6 +30,11 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="enabled" type="BOOLEAN"
+                    remarks="User's enabled status for security">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="created_date" type="TIMESTAMPTZ"
                     remarks="User creation date and time">
                 <constraints nullable="false"/>

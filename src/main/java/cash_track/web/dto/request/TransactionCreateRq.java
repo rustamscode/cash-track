@@ -1,4 +1,4 @@
-package cash_track.dto;
+package cash_track.web.dto;
 
 import cash_track.persistance.entity.enums.CurrencyType;
 import cash_track.persistance.entity.enums.TransactionType;
@@ -15,17 +15,17 @@ import java.math.BigDecimal;
 @Builder
 public class TransactionCreateRq {
 
-    @NotNull
-    @Positive
-    private BigDecimal amount;
+  @NotNull
+  @Positive
+  private BigDecimal amount;
 
-    @NotNull
-    private CurrencyType currency;
+  @NotNull
+  private CurrencyType currency;
 
-    @NotNull
-    private TransactionType type;
+  @NotNull
+  private TransactionType type;
 
-    @Nullable
-    @Size(max = 1000)
-    private String comment;
+  @Nullable
+  @Size(max = 1000)
+  private String comment;
 }

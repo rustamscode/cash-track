@@ -1,4 +1,4 @@
-package cash_track.repository;
+package cash_track.persistance.repository;
 
 import cash_track.persistance.entity.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;

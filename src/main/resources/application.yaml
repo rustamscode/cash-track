@@ -1,3 +1,8 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /cash-track
+
 spring:
   application: name=ms-shooter-account
   datasource:
