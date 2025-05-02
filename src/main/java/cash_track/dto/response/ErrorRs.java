@@ -1,14 +1,12 @@
 package cash_track.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-@AllArgsConstructor
-public class ResponseDto<T> {
-
+public class ErrorRs {
   private String message;
-  private T data;
+  private String exception;
+  private String source;
 }
