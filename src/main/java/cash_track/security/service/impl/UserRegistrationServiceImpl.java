@@ -8,7 +8,6 @@ import cash_track.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -22,7 +21,6 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
   private final UserMapper userMapper;
 
   @Override
-  @Transactional
   public UUID registerUser(UserRegistrationRq request) {
     CreateUserRq createUserRq = userMapper.mapToCreateUserRq(request);
 
