@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-table-users" author="Rustamscode">
+        <createTable tableName="users"
+                     remarks="Stores data about app users">
+
+            <column name="id" type="UUID"
+                    remarks="User ID (UUID)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_users"/>
+            </column>
+
+            <column name="username" type="VARCHAR(255)"
+                    remarks="User name is used for user representation">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="email" type="VARCHAR(255)"
+                    remarks="User email is used for authentication">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="password" type="VARCHAR(255)"
+                    remarks="User password is used for authentication">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="enabled" type="BOOLEAN"
+                    remarks="User's enabled status for security">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_date" type="TIMESTAMPTZ"
+                    remarks="User creation date and time">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_modified_date" type="TIMESTAMPTZ"
+                    remarks="User last modified date">
+            </column>
+
+            <column name="is_deleted" type="BOOLEAN"
+                    remarks="Transaction deletion status for soft deletes">
+            </column>
+
+            <column name="version" type="BIGINT"
+                    remarks="Version for optimistic locking (JPA)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <createIndex tableName="users" indexName="idx_users_username" unique="true">
+            <column name="username"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="create-table-transactions" author="Rustamscode">
+        <createTable tableName="transactions"
+                     remarks="Stores data about financial transactions">
+
+            <column name="id" type="UUID"
+                    remarks="Transaction ID (UUID)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_transactions"/>
+            </column>
+
+            <column name="amount" type="NUMERIC(10, 2)"
+                    remarks="Transaction amount">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="currency" type="VARCHAR(255)"
+                    remarks="Transaction currency">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="type" type="VARCHAR(255)"
+                    remarks="Transaction type">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="comment" type="VARCHAR(1000)"
+                    remarks="Transaction Comment. Isn't required">
+            </column>
+
+            <column name="status" type="VARCHAR(255)"
+                    remarks="Transaction Status">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="UUID"
+                    remarks="Transaction owner. FK users(id)">
+                <constraints nullable="false" foreignKeyName="fk_transactions_user"
+                             referencedTableName="users" referencedColumnNames="id"/>
+            </column>
+
+            <column name="created_date" type="TIMESTAMPTZ"
+                    remarks="Transaction date and time">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_modified_date" type="TIMESTAMP"
+                    remarks="Transaction last modified date">
+            </column>
+
+            <column name="is_deleted" type="BOOLEAN"
+                    remarks="Transaction deletion status for soft deletes">
+            </column>
+
+            <column name="version" type="BIGINT"
+                    remarks="Version for optimistic locking (JPA)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-user_roles" author="Rustamscode">
+        <createTable tableName="user_roles" remarks="Stores data about user roles">
+
+            <column name="user_id" type="UUID" remarks="User id (Role owner)">
+                <constraints nullable="false" foreignKeyName="fk_user_roles"
+                             referencedTableName="users" referencedColumnNames="id" deleteCascade="true"/>
+            </column>
+
+            <column name="role" type="VARCHAR(64)" remarks="Role (For security)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addPrimaryKey tableName="user_roles" columnNames="user_id, role" constraintName="pk_user_roles"/>
+    </changeSet>
+
+</databaseChangeLog>
