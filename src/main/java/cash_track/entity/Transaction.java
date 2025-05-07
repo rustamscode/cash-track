@@ -55,4 +55,9 @@ public class Transaction extends BaseEntity {
   @JoinColumn(name = "user_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)
   private User user;
+
+  @ToString.Exclude
+  @JoinColumn(name = "category_id", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Category category;
 }
