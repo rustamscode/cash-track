@@ -2,6 +2,7 @@ package cash_track.security.user;
 
 import cash_track.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class DefaultUserDetails implements UserDetails {

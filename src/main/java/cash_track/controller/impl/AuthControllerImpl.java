@@ -1,6 +1,6 @@
 package cash_track.controller.impl;
 
-import cash_track.controller.RegistrationController;
+import cash_track.controller.AuthController;
 import cash_track.dto.request.UserRegistrationRq;
 import cash_track.dto.response.ResponseDto;
 import cash_track.security.service.UserRegistrationService;
@@ -13,7 +13,7 @@ import static cash_track.util.ResponseMessageUtil.REGISTRATION_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
-public class RegistrationControllerImpl implements RegistrationController {
+public class AuthControllerImpl implements AuthController {
 
   private final UserRegistrationService userRegistrationService;
 

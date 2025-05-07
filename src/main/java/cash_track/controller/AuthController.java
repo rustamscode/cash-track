@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.UUID;
 
-@RequestMapping("/register")
-@Tag(name = "Registration API")
-public interface RegistrationController {
+@Tag(name = "Auth API")
+@RequestMapping("/auth")
+public interface AuthController {
 
-  @PostMapping
+  @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
   @Operation(summary = "Register an account")
   ResponseDto<UUID> registerUser(@RequestBody @Valid UserRegistrationRq registrationRq);

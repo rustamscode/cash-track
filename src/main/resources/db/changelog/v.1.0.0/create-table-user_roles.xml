@@ -21,6 +21,5 @@
         </createTable>
 
         <addPrimaryKey tableName="user_roles" columnNames="user_id, role" constraintName="pk_user_roles"/>
-
     </changeSet>
 </databaseChangeLog>
