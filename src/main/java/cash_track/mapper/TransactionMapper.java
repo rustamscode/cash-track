@@ -4,14 +4,27 @@ import cash_track.dto.request.TransactionCreateRq;
 import cash_track.dto.response.TransactionRs;
 import cash_track.entity.Transaction;
 import cash_track.entity.enums.TransactionStatus;
+import cash_track.mapper.enricher.TransactionEnricher;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(
     componentModel = "spring",
-    imports = {TransactionStatus.class}
+    imports = {TransactionStatus.class},
+    uses = {CategoryMapper.class}
 )
 public abstract class TransactionMapper {
+
+  private TransactionEnricher transactionEnricher;
+
+  @Autowired
+  public void setTransactionEnricher(TransactionEnricher transactionEnricher) {
+    this.transactionEnricher = transactionEnricher;
+  }
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createdDate", ignore = true)
@@ -24,12 +37,21 @@ public abstract class TransactionMapper {
   @Mapping(target = "comment", source = "comment")
   @Mapping(target = "status", expression = "java(TransactionStatus.CREATED)")
   @Mapping(target = "user", ignore = true)
-  public abstract Transaction mapToTransaction(TransactionCreateRq transactionCreateRq);
+  @Mapping(target = "category", ignore = true)
+  public abstract Transaction mapToTransaction(TransactionCreateRq transactionCreateRq, @Context String username);
 
   @Mapping(target = "amount", source = "amount")
   @Mapping(target = "currency", source = "currency")
   @Mapping(target = "type", source = "type")
   @Mapping(target = "comment", source = "comment")
   @Mapping(target = "status", source = "status")
+  @Mapping(target = "category", source = "category")
   public abstract TransactionRs mapToTransactionRs(Transaction transaction);
+
+  @AfterMapping
+  protected void enrichEntity(@MappingTarget Transaction transaction,
+                              TransactionCreateRq transactionCreateRq,
+                              @Context String username) {
+    transactionEnricher.enrichTransaction(transaction, transactionCreateRq, username);
+  }
 }

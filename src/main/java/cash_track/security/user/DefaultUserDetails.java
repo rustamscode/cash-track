@@ -22,7 +22,7 @@ public class DefaultUserDetails implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return user.getRoles()
         .stream()
-        .map(role -> new SimpleGrantedAuthority(role.name()))
+        .map(role -> new SimpleGrantedAuthority(role.shortName()))
         .collect(Collectors.toSet());
   }
 
