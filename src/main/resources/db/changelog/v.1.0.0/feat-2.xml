@@ -15,8 +15,14 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="pk_categories"/>
             </column>
 
+            <column name="user_id" type="UUID"
+                    remarks="User ID (UUID)">
+                <constraints nullable="false" foreignKeyName="fk_user_category"
+                             referencedTableName="users" referencedColumnNames="id" deleteCascade="true"/>
+            </column>
+
             <column name="name" type="VARCHAR(128)" remarks="Category name">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false"/>
             </column>
 
             <column name="info" type="VARCHAR(512)" remarks="Category information and details"/>
@@ -40,6 +46,13 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
             </column>
 
         </createTable>
+
+        <addUniqueConstraint tableName="categories" columnNames="user_id, name"
+                             constraintName="uq_category_user_name"/>
+
+        <createIndex tableName="categories" indexName="idx_category_user_id">
+            <column name="user_id"/>
+        </createIndex>
     </changeSet>
 
     <changeSet id="add-column-category_id-in-transactions" author="Rustamscode">
