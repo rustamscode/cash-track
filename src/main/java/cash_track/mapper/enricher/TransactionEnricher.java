@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static cash_track.util.ExceptionMessageUtil.CATEGORY_NOT_FOUND;
+import static cash_track.util.ExceptionMessageUtil.CATEGORY_NOT_FOUND_BY_NAME;
 
 @Slf4j
 @Component
@@ -19,22 +19,22 @@ public class TransactionEnricher {
 
   private final CategoryRepository categoryRepository;
 
-  public void enrichTransaction(Transaction transaction, TransactionCreateRq request) {
+  public void enrichTransaction(Transaction transaction, TransactionCreateRq request, String username) {
     if (transaction == null || request == null) {
       return;
     }
 
-    enrichTransactionCategory(transaction, request);
+    enrichTransactionCategory(transaction, request, username);
   }
 
-  private void enrichTransactionCategory(Transaction transaction, TransactionCreateRq request) {
-    String categoryName = request.getCategory();
+  private void enrichTransactionCategory(Transaction transaction, TransactionCreateRq request, String username) {
+    String categoryName = request.getCategoryName();
     if (StringUtils.isBlank(categoryName)) {
       return;
     }
 
-    Category category = categoryRepository.getCategoryByName(categoryName)
-        .orElseThrow(() -> new CategoryNotFoundException(String.format(CATEGORY_NOT_FOUND, categoryName)));
+    Category category = categoryRepository.getCategoryByNameAndUser_Username(categoryName, username)
+        .orElseThrow(() -> new CategoryNotFoundException(String.format(CATEGORY_NOT_FOUND_BY_NAME, categoryName)));
 
     transaction.setCategory(category);
     log.info("Transaction has been enriched with category");
