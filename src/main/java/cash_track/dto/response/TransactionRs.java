@@ -17,5 +17,4 @@ public class TransactionRs {
   private TransactionType type;
   private String comment;
   private TransactionStatus status;
-  private CategoryRs category;
 }

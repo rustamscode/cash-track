@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="create-table-users" author="Rustamscode">
+        <createTable tableName="users"
+                     remarks="Stores data about app users">
+
+            <column name="id" type="UUID"
+                    remarks="User ID (UUID)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_users"/>
+            </column>
+
+            <column name="username" type="VARCHAR(255)"
+                    remarks="User name is used for user representation">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="email" type="VARCHAR(255)"
+                    remarks="User email is used for authentication">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="password" type="VARCHAR(255)"
+                    remarks="User password is used for authentication">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="enabled" type="BOOLEAN"
+                    remarks="User's enabled status for security">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_date" type="TIMESTAMPTZ"
+                    remarks="User creation date and time">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_modified_date" type="TIMESTAMPTZ"
+                    remarks="User last modified date">
+            </column>
+
+            <column name="is_deleted" type="BOOLEAN"
+                    remarks="Transaction deletion status for soft deletes">
+            </column>
+
+            <column name="version" type="BIGINT"
+                    remarks="Version for optimistic locking (JPA)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <createIndex tableName="users" indexName="idx_users_username" unique="true">
+            <column name="username"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

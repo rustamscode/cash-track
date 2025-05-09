@@ -28,8 +28,4 @@ public class TransactionCreateRq {
   @Nullable
   @Size(max = 1000)
   private String comment;
-
-  @NotNull
-  @Size(max = 255)
-  private String categoryName;
 }

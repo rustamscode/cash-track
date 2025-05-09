@@ -34,7 +34,7 @@ public class TransactionServiceImpl implements TransactionService {
   @Transactional
   public UUID createTransaction(TransactionCreateRq transactionCreateRq, DefaultUserDetails userDetails) {
     log.info("Transaction creation has started");
-    Transaction transaction = transactionMapper.mapToTransaction(transactionCreateRq, userDetails.getUsername());
+    Transaction transaction = transactionMapper.mapToTransaction(transactionCreateRq);
     String username = userDetails.getUsername();
     User user = userService.getUserByUsername(username);
     transaction.setUser(user);

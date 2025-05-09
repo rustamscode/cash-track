@@ -20,9 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -62,10 +60,4 @@ public class User extends BaseEntity {
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
   private Set<Role> roles = new HashSet<>();
-
-  @ToString.Exclude
-  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user",
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
-  //TODO НАСТРОИТЬ КАСКАДИРОВАНИЕ + КОНСПЕКТ
-  private List<Category> categories = new ArrayList<>();
 }
