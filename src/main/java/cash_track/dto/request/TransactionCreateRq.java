@@ -31,5 +31,5 @@ public class TransactionCreateRq {
 
   @NotNull
   @Size(max = 255)
-  private String category;
+  private String categoryName;
 }

@@ -40,8 +40,8 @@ public class Transaction extends BaseEntity {
   @Column(name = "currency", nullable = false)
   private CurrencyType currency;
 
-  @Column(name = "type", nullable = false)
   @Enumerated(EnumType.STRING)
+  @Column(name = "type", nullable = false)
   private TransactionType type;
 
   @Column(name = "comment")
@@ -52,12 +52,12 @@ public class Transaction extends BaseEntity {
   private TransactionStatus status;
 
   @ToString.Exclude
-  @JoinColumn(name = "user_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
   @ToString.Exclude
-  @JoinColumn(name = "category_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "category_id", nullable = false)
   private Category category;
 }

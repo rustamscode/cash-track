@@ -2,6 +2,9 @@ package cash_track.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,9 +26,14 @@ import lombok.experimental.FieldNameConstants;
 @Table(name = "categories")
 public class Category extends BaseEntity {
 
-  @Column(name = "name", unique = true, nullable = false, updatable = false)
+  @Column(name = "name", nullable = false)
   private String name;
 
   @Column(name = "info")
   private String info;
+
+  @ToString.Exclude
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  private User user;
 }
