@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import static cash_track.util.ResponseMessageUtil.TRANSACTIONS_FETCHED;
 import static cash_track.util.ResponseMessageUtil.TRANSACTION_CREATED;
+import static cash_track.util.ResponseMessageUtil.TRANSACTION_DELETED;
 import static cash_track.util.ResponseMessageUtil.TRANSACTION_UPDATED;
 
 @RestController
@@ -43,6 +44,14 @@ public class TransactionControllerImpl implements TransactionController {
     return ResponseDto.<TransactionRs>builder()
         .message(TRANSACTION_UPDATED)
         .data(transactionService.updateTransaction(id, request))
+        .build();
+  }
+
+  @Override
+  public ResponseDto<Void> deleteTransaction(UUID id) {
+    return ResponseDto.<Void>builder()
+        .message(TRANSACTION_DELETED)
+        .data(null)
         .build();
   }
 }

@@ -11,6 +11,7 @@ public class ResponseMessageUtil {
   public static final String TRANSACTION_CREATED = "Transaction has successfully been created";
   public static final String TRANSACTIONS_FETCHED = "Transactions have successfully been fetched";
   public static final String TRANSACTION_UPDATED = "Transactions has successfully been updated";
+  public static final String TRANSACTION_DELETED = "Transactions has successfully been deleted";
 
   public static final String CATEGORY_CREATED = "Category has successfully been created";
   public static final String CATEGORY_UPDATED = "Category has successfully been updated";
