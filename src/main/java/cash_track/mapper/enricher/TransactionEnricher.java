@@ -19,21 +19,20 @@ public class TransactionEnricher {
 
   private final CategoryRepository categoryRepository;
 
-  public void enrichTransaction(Transaction transaction, TransactionCreateRq request, String username) {
+  public void enrichTransaction(Transaction transaction, TransactionCreateRq request) {
     if (transaction == null || request == null) {
       return;
     }
 
-    enrichTransactionCategory(transaction, request, username);
+    enrichTransactionCategory(transaction, request.getCategoryName());
   }
 
-  private void enrichTransactionCategory(Transaction transaction, TransactionCreateRq request, String username) {
-    String categoryName = request.getCategoryName();
+  private void enrichTransactionCategory(Transaction transaction, String categoryName) {
     if (StringUtils.isBlank(categoryName)) {
       return;
     }
 
-    Category category = categoryRepository.getCategoryByNameAndUser_Username(categoryName, username)
+    Category category = categoryRepository.findCategoryByNameForCurrentUser(categoryName)
         .orElseThrow(() -> new CategoryNotFoundException(String.format(CATEGORY_NOT_FOUND_BY_NAME, categoryName)));
 
     transaction.setCategory(category);

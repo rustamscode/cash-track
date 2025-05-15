@@ -3,12 +3,10 @@ package cash_track.controller;
 import cash_track.dto.request.TransactionCreateRq;
 import cash_track.dto.response.ResponseDto;
 import cash_track.dto.response.TransactionRs;
-import cash_track.security.user.DefaultUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,10 +24,9 @@ public interface TransactionController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   @Operation(summary = "Create a transaction")
-  ResponseDto<UUID> createTransaction(@RequestBody @Valid TransactionCreateRq transactionCreateRq,
-                                      @AuthenticationPrincipal DefaultUserDetails userDetails);
+  ResponseDto<UUID> createTransaction(@RequestBody @Valid TransactionCreateRq transactionCreateRq);
 
   @GetMapping
   @Operation(summary = "Get transactions")
-  ResponseDto<List<TransactionRs>> getTransactions(@AuthenticationPrincipal DefaultUserDetails userDetails);
+  ResponseDto<List<TransactionRs>> getUserTransactions();
 }

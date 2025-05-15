@@ -34,14 +34,14 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   @Transactional
-  public UUID createCategory(CategoryCreateRq request, String username) {
+  public UUID createCategory(CategoryCreateRq request) {
     Category category = categoryMapper.mapToCategory(request);
 
     log.info("Checking category name availability");
-    validateCategoryNameAvailability(category.getName(), username);
+    validateCategoryNameAvailability(category.getName());
 
     log.info("Enriching category with user");
-    category.setUser(userService.getUserByUsername(username));
+    category.setUser(userService.getCurrentUser());
 
     log.info(SAVING_IN_DB_LOG, category);
     categoryRepository.save(category);
@@ -51,8 +51,8 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   @Transactional
-  public CategoryRs updateCategory(UUID categoryId, CategoryUpdateRq request, String username) {
-    Category category = categoryRepository.findByIdAndUser_Username(categoryId, username)
+  public CategoryRs updateCategory(UUID categoryId, CategoryUpdateRq request) {
+    Category category = categoryRepository.findCategoryByIdForCurrentUser(categoryId)
         .orElseThrow(() -> new CategoryNotFoundException(String.format(CATEGORY_NOT_FOUND_BY_ID, categoryId)));
 
     categoryMapper.updateCategory(request, category);
@@ -63,24 +63,24 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   @Transactional(readOnly = true)
-  public CategoryRs getCategoryById(UUID categoryId, String username) {
-    Category category = categoryRepository.findByIdAndUser_Username(categoryId, username)
+  public CategoryRs getCategoryById(UUID categoryId) {
+    Category category = categoryRepository.findCategoryByIdForCurrentUser(categoryId)
         .orElseThrow(() -> new CategoryNotFoundException(String.format(CATEGORY_NOT_FOUND_BY_ID, categoryId)));
 
     return categoryMapper.mapToCategoryRs(category);
   }
 
   @Override
-  public void deleteCategoryById(UUID categoryId, String username) {
-    Category category = categoryRepository.findByIdAndUser_Username(categoryId, username)
+  public void deleteCategoryById(UUID categoryId) {
+    Category category = categoryRepository.findCategoryByIdForCurrentUser(categoryId)
         .orElseThrow(() -> new CategoryNotFoundException(String.format(CATEGORY_NOT_FOUND_BY_ID, categoryId)));
 
     categoryRepository.delete(category);
     log.info("Category with id {} has been deleted", categoryId);
   }
 
-  private void validateCategoryNameAvailability(String categoryName, String username) {
-    if (categoryRepository.existsByNameAndUser_Username(categoryName, username)) {
+  private void validateCategoryNameAvailability(String categoryName) {
+    if (categoryRepository.existsByNameForCurrentUser(categoryName)) {
       throw new CategoryAlreadyExistsException(String.format(CATEGORY_ALREADY_EXISTS_BY_NAME, categoryName));
     }
   }

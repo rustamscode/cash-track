@@ -53,7 +53,8 @@ public class User extends BaseEntity {
   private Boolean enabled = true;
 
   @ToString.Exclude
-  @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+      cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
   private Set<Transaction> transactions = new HashSet<>();
 
   @ToString.Exclude
@@ -64,8 +65,6 @@ public class User extends BaseEntity {
   private Set<Role> roles = new HashSet<>();
 
   @ToString.Exclude
-  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user",
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
-  //TODO НАСТРОИТЬ КАСКАДИРОВАНИЕ + КОНСПЕКТ
+  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user", cascade = {CascadeType.ALL})
   private List<Category> categories = new ArrayList<>();
 }

@@ -9,5 +9,5 @@ public interface UserService {
 
   UUID createUser(CreateUserRq request);
 
-  User getUserByUsername(String username);
+  User getCurrentUser();
 }
