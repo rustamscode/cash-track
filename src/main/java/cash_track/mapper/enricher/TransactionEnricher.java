@@ -1,6 +1,7 @@
 package cash_track.mapper.enricher;
 
 import cash_track.dto.request.TransactionCreateRq;
+import cash_track.dto.request.TransactionUpdateRq;
 import cash_track.entity.Category;
 import cash_track.entity.Transaction;
 import cash_track.exception.CategoryNotFoundException;
@@ -24,6 +25,13 @@ public class TransactionEnricher {
       return;
     }
 
+    enrichTransactionCategory(transaction, request.getCategoryName());
+  }
+
+  public void enrichTransaction(Transaction transaction, TransactionUpdateRq request) {
+    if (transaction == null || request == null) {
+      return;
+    }
     enrichTransactionCategory(transaction, request.getCategoryName());
   }
 
