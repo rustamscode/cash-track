@@ -3,21 +3,21 @@ package cash_track.service.impl;
 import cash_track.dto.request.CreateUserRq;
 import cash_track.entity.User;
 import cash_track.exception.UserAlreadyExistsException;
+import cash_track.exception.UserNotFoundException;
 import cash_track.mapper.UserMapper;
 import cash_track.repository.UserRepository;
 import cash_track.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static cash_track.util.ExceptionMessageUtil.USERNAME_NOT_FOUND;
 import static cash_track.util.ExceptionMessageUtil.USER_ALREADY_EXISTS_BY_EMAIL;
 import static cash_track.util.ExceptionMessageUtil.USER_ALREADY_EXISTS_BY_USERNAME;
+import static cash_track.util.ExceptionMessageUtil.USER_NOT_FOUND;
 import static cash_track.util.LogMessageUtil.SAVING_IN_DB_LOG;
 
 @Slf4j
@@ -52,11 +52,11 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional(readOnly = true)
-  public User getUserByUsername(String username) {
-    User user = userRepository.findUserByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException(String.format(USERNAME_NOT_FOUND, username)));
+  public User getCurrentUser() {
+    User user = userRepository.findCurrentUser()
+        .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
 
-    log.info("User {} has been successfully found", username);
+    log.info("User {} has been successfully found", user.getUsername());
 
     return user;
   }

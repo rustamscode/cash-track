@@ -6,7 +6,6 @@ import cash_track.entity.Transaction;
 import cash_track.entity.User;
 import cash_track.mapper.TransactionMapper;
 import cash_track.repository.TransactionRepository;
-import cash_track.security.user.DefaultUserDetails;
 import cash_track.service.TransactionService;
 import cash_track.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +31,10 @@ public class TransactionServiceImpl implements TransactionService {
 
   @Override
   @Transactional
-  public UUID createTransaction(TransactionCreateRq transactionCreateRq, DefaultUserDetails userDetails) {
+  public UUID createUserTransaction(TransactionCreateRq transactionCreateRq) {
     log.info("Transaction creation has started");
-    Transaction transaction = transactionMapper.mapToTransaction(transactionCreateRq, userDetails.getUsername());
-    String username = userDetails.getUsername();
-    User user = userService.getUserByUsername(username);
+    Transaction transaction = transactionMapper.mapToTransaction(transactionCreateRq);
+    User user = userService.getCurrentUser();
     transaction.setUser(user);
 
     UUID transactionId = transactionRepository.save(transaction).getId();
@@ -47,10 +45,9 @@ public class TransactionServiceImpl implements TransactionService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<TransactionRs> getTransactions(DefaultUserDetails userDetails) {
-    String username = userDetails.getUsername();
+  public List<TransactionRs> getUserTransactions() {
     log.info("Fetching transactions by username from DB");
-    List<Transaction> transactions = transactionRepository.findTransactionsByUserUsername(username);
+    List<Transaction> transactions = transactionRepository.findTransactionsForCurrentUser();
 
     log.info("Mapping transaction list into transaction response-dto list");
     return transactions.stream()

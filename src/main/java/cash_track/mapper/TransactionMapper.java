@@ -6,7 +6,6 @@ import cash_track.entity.Transaction;
 import cash_track.entity.enums.TransactionStatus;
 import cash_track.mapper.enricher.TransactionEnricher;
 import org.mapstruct.AfterMapping;
-import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -38,7 +37,7 @@ public abstract class TransactionMapper {
   @Mapping(target = "status", expression = "java(TransactionStatus.CREATED)")
   @Mapping(target = "user", ignore = true)
   @Mapping(target = "category", ignore = true)
-  public abstract Transaction mapToTransaction(TransactionCreateRq transactionCreateRq, @Context String username);
+  public abstract Transaction mapToTransaction(TransactionCreateRq transactionCreateRq);
 
   @Mapping(target = "amount", source = "amount")
   @Mapping(target = "currency", source = "currency")
@@ -50,8 +49,7 @@ public abstract class TransactionMapper {
 
   @AfterMapping
   protected void enrichEntity(@MappingTarget Transaction transaction,
-                              TransactionCreateRq transactionCreateRq,
-                              @Context String username) {
-    transactionEnricher.enrichTransaction(transaction, transactionCreateRq, username);
+                              TransactionCreateRq transactionCreateRq) {
+    transactionEnricher.enrichTransaction(transaction, transactionCreateRq);
   }
 }

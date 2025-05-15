@@ -9,11 +9,11 @@ import java.util.UUID;
 
 public interface CategoryService {
 
-  UUID createCategory(CategoryCreateRq categoryCreateRq, String username);
+  UUID createCategory(CategoryCreateRq categoryCreateRq);
 
-  CategoryRs updateCategory(UUID id, CategoryUpdateRq request, String username);
+  CategoryRs updateCategory(UUID id, CategoryUpdateRq request);
 
-  CategoryRs getCategoryById(UUID id, String username);
+  CategoryRs getCategoryById(UUID id);
 
-  void deleteCategoryById(UUID id, String username);
+  void deleteCategoryById(UUID id);
 }
