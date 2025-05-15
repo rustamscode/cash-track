@@ -70,6 +70,13 @@ public class TransactionServiceImpl implements TransactionService {
     return transactionMapper.mapToTransactionRs(transaction);
   }
 
+  @Override
+  @Transactional
+  public void deleteTransaction(UUID transactionId) {
+    transactionRepository.delete(getTransactionById(transactionId));
+    log.info("Transaction with id {} has been deleted", transactionId);
+  }
+
   @Transactional(readOnly = true)
   public Transaction getTransactionById(UUID transactionId) {
     return transactionRepository.getTransactionsByIdForCurrentUser(transactionId)

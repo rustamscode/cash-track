@@ -15,4 +15,6 @@ public interface TransactionService {
   List<TransactionRs> getUserTransactions();
 
   TransactionRs updateTransaction(UUID transactionId, TransactionUpdateRq request);
+
+  void deleteTransaction(UUID id);
 }

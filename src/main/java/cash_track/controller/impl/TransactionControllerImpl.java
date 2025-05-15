@@ -49,9 +49,10 @@ public class TransactionControllerImpl implements TransactionController {
 
   @Override
   public ResponseDto<Void> deleteTransaction(UUID id) {
+    transactionService.deleteTransaction(id);
+
     return ResponseDto.<Void>builder()
         .message(TRANSACTION_DELETED)
-        .data(null)
         .build();
   }
 }
