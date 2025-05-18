@@ -15,4 +15,7 @@ public class ExceptionMessageUtil {
   public static final String CATEGORY_ALREADY_EXISTS_BY_NAME = "Category with name %s already exists";
 
   public static final String TRANSACTION_NOT_FOUND = "Transaction with id %s was not found";
+
+  public static final String SEARCH_OPERATION_INVALID = "Search operation type %s is invalid";
+  public static final String SEARCH_OPTION_INVALID = "Search operation type %s is invalid";
 }
