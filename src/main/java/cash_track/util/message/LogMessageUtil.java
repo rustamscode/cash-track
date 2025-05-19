@@ -1,4 +1,4 @@
-package cash_track.util;
+package cash_track.util.message;
 
 import lombok.experimental.UtilityClass;
 

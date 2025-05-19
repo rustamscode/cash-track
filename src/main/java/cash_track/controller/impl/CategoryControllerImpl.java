@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
-import static cash_track.util.ResponseMessageUtil.CATEGORY_CREATED;
-import static cash_track.util.ResponseMessageUtil.CATEGORY_DELETED;
-import static cash_track.util.ResponseMessageUtil.CATEGORY_FETCHED_BY_ID;
-import static cash_track.util.ResponseMessageUtil.CATEGORY_UPDATED;
+import static cash_track.util.message.ResponseMessageUtil.CATEGORY_CREATED;
+import static cash_track.util.message.ResponseMessageUtil.CATEGORY_DELETED;
+import static cash_track.util.message.ResponseMessageUtil.CATEGORY_FETCHED_BY_ID;
+import static cash_track.util.message.ResponseMessageUtil.CATEGORY_UPDATED;
 
 @RestController
 @RequiredArgsConstructor

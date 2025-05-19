@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static cash_track.util.ExceptionMessageUtil.USER_ALREADY_EXISTS_BY_EMAIL;
-import static cash_track.util.ExceptionMessageUtil.USER_ALREADY_EXISTS_BY_USERNAME;
-import static cash_track.util.ExceptionMessageUtil.USER_NOT_FOUND;
-import static cash_track.util.LogMessageUtil.SAVING_IN_DB_LOG;
+import static cash_track.util.message.ExceptionMessageUtil.USER_ALREADY_EXISTS_BY_EMAIL;
+import static cash_track.util.message.ExceptionMessageUtil.USER_ALREADY_EXISTS_BY_USERNAME;
+import static cash_track.util.message.ExceptionMessageUtil.USER_NOT_FOUND;
+import static cash_track.util.message.LogMessageUtil.SAVING_IN_DB_LOG;
 
 @Slf4j
 @Service

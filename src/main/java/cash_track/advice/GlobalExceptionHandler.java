@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static cash_track.util.LogMessageUtil.GENERAL_ERROR_LOG;
-import static cash_track.util.ResponseMessageUtil.ERROR_OCCURRED;
+import static cash_track.util.message.LogMessageUtil.GENERAL_ERROR_LOG;
+import static cash_track.util.message.ResponseMessageUtil.ERROR_OCCURRED;
 
 @Slf4j
 @RestControllerAdvice
