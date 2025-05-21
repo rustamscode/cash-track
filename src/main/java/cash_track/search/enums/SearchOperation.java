@@ -1,41 +1,55 @@
 package cash_track.search.enums;
 
 import cash_track.exception.UnsupportedSearchOperationException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.extern.slf4j.Slf4j;
 
-import static cash_track.util.ExceptionMessageUtil.SEARCH_OPERATION_INVALID;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
+import static cash_track.util.message.ExceptionMessageUtil.SEARCH_OPERATION_INVALID;
+import static cash_track.util.message.ExceptionMessageUtil.SEARCH_OPERATION_IS_NULL;
+import static cash_track.util.message.LogMessageUtil.INVALID_VALUE;
+
+/**
+ Represents the type of operation to be performed in a search query.
+ */
+
+@Slf4j
 public enum SearchOperation {
-  CONTAINS("cn"), DOES_NOT_CONTAIN("ncn"), EQUAL("eq"), NOT_EQUAL("neq"), BEGINS_WITH("bw"),
-  DOES_NOT_BEGIN_WITH("nbw"), ENDS_WITH("ew"), DOES_NOT_END_WITH("new"),
-  NULL("n"), NOT_NULL("nn"), GREATER_THAN("g"), GREATER_THAN_EQUAL("geq"), LESS_THAN("l"),
-  LESS_THAN_EQUAL("leq");
+  CONTAINS("CN"), NOT_CONTAINS("NCN"), EQUAL("EQ"), NOT_EQUAL("NEQ"), BEGINS_WITH("BW"),
+  NOT_BEGIN_WITH("NBW"), ENDS_WITH("EW"), NOT_END_WITH("NEW"), GREATER("GR"), GREATER_OR_EQUAL("GREQ"), LESS("LS"),
+  LESS_OR_EQUAL("LSEQ");
 
   private final String code;
+
+  private static final Map<String, SearchOperation> CODE_VALUE = new HashMap<>();
+
+  static {
+    for (var operation : values()) {
+      CODE_VALUE.put(operation.code, operation);
+    }
+  }
 
   SearchOperation(String code) {
     this.code = code;
   }
 
-  public static SearchOperation fromCode(String code) {
-    code = code.toLowerCase();
+  @JsonCreator
+  public static SearchOperation fromString(String value) {
+    if (value == null) {
+      throw new IllegalArgumentException(SEARCH_OPERATION_IS_NULL);
+    }
 
-    return switch (code) {
-      case "cn" -> CONTAINS;
-      case "ncn" -> DOES_NOT_CONTAIN;
-      case "eq" -> EQUAL;
-      case "neq" -> NOT_EQUAL;
-      case "bw" -> BEGINS_WITH;
-      case "nbw" -> DOES_NOT_BEGIN_WITH;
-      case "ew" -> ENDS_WITH;
-      case "new" -> DOES_NOT_END_WITH;
-      case "n" -> NULL;
-      case "nn" -> NOT_NULL;
-      case "g" -> GREATER_THAN;
-      case "geq" -> GREATER_THAN_EQUAL;
-      case "l" -> LESS_THAN;
-      case "leq" -> LESS_THAN_EQUAL;
+    String upperCaseValue = value.toUpperCase().intern();
 
-      default -> throw new UnsupportedSearchOperationException(String.format(SEARCH_OPERATION_INVALID, code));
-    };
+    try {
+      return Optional.ofNullable(CODE_VALUE.get(upperCaseValue))
+          .orElseGet(() -> SearchOperation.valueOf(upperCaseValue));
+    } catch (IllegalArgumentException e) {
+      log.warn(INVALID_VALUE, SearchOperation.class.getSimpleName(), value);
+      throw new UnsupportedSearchOperationException(String.format(SEARCH_OPERATION_INVALID, value));
+    }
   }
 }
