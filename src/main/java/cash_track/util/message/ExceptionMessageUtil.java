@@ -17,5 +17,8 @@ public class ExceptionMessageUtil {
   public static final String TRANSACTION_NOT_FOUND = "Transaction with id %s was not found";
 
   public static final String SEARCH_OPERATION_INVALID = "Search operation type %s is invalid";
-  public static final String SEARCH_OPTION_INVALID = "Search operation type %s is invalid";
+  public static final String SEARCH_OPERATION_INVALID_FOR_VALUE = "Search operation type %s is invalid for value %s";
+  public static final String SEARCH_OPERATION_IS_NULL = "Search operation must not be null";
+
+  public static final String AUTHENTICATION_CREDENTIALS_NOT_FOUND = "Authentication credentials were not found";
 }

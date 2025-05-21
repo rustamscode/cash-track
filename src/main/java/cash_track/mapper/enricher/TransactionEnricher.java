@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static cash_track.util.ExceptionMessageUtil.CATEGORY_NOT_FOUND_BY_NAME;
+import static cash_track.util.message.ExceptionMessageUtil.CATEGORY_NOT_FOUND_BY_NAME;
 
 @Slf4j
 @Component
