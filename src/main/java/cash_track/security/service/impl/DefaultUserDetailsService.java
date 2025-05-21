@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static cash_track.util.ExceptionMessageUtil.USERNAME_NOT_FOUND;
+import static cash_track.util.message.ExceptionMessageUtil.USERNAME_NOT_FOUND;
 
 @Component
 @RequiredArgsConstructor

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
-import static cash_track.util.ResponseMessageUtil.REGISTRATION_SUCCESS;
+import static cash_track.util.message.ResponseMessageUtil.REGISTRATION_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor

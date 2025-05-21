@@ -1,6 +1,7 @@
 package cash_track.service.impl;
 
 import cash_track.dto.request.TransactionCreateRq;
+import cash_track.dto.request.TransactionSearchRq;
 import cash_track.dto.request.TransactionUpdateRq;
 import cash_track.dto.response.TransactionRs;
 import cash_track.entity.Transaction;
@@ -8,18 +9,21 @@ import cash_track.entity.User;
 import cash_track.exception.TransactionNotFoundException;
 import cash_track.mapper.TransactionMapper;
 import cash_track.repository.TransactionRepository;
+import cash_track.search.specification.TransactionSpecificationBuilder;
 import cash_track.service.TransactionService;
 import cash_track.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
-import static cash_track.util.ExceptionMessageUtil.TRANSACTION_NOT_FOUND;
-import static cash_track.util.LogMessageUtil.SAVING_IN_DB_LOG;
+import static cash_track.util.message.ExceptionMessageUtil.TRANSACTION_NOT_FOUND;
+import static cash_track.util.message.LogMessageUtil.SAVING_IN_DB_LOG;
 
 @Slf4j
 @Service
@@ -27,6 +31,8 @@ import static cash_track.util.LogMessageUtil.SAVING_IN_DB_LOG;
 public class TransactionServiceImpl implements TransactionService {
 
   private final TransactionRepository transactionRepository;
+
+  private final TransactionSpecificationBuilder transactionSpecificationBuilder;
 
   private final UserService userService;
 
@@ -48,14 +54,16 @@ public class TransactionServiceImpl implements TransactionService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<TransactionRs> getUserTransactions() {
+  public Page<TransactionRs> getTransactions(String username, TransactionSearchRq request, Pageable pageable) {
+    Specification<Transaction> usernameSpec = transactionSpecificationBuilder.buildUsernameSpecification(username);
+    Specification<Transaction> specification = transactionSpecificationBuilder.buildSearchCriteriaSpecification(request.getCriteriaList())
+        .and(usernameSpec);
+
     log.info("Fetching transactions by username from DB");
-    List<Transaction> transactions = transactionRepository.findTransactionsForCurrentUser();
+    Page<Transaction> transactions = transactionRepository.findAll(specification, pageable);
 
     log.info("Mapping transaction list into transaction response-dto list");
-    return transactions.stream()
-        .map(transactionMapper::mapToTransactionRs)
-        .toList();
+    return transactions.map(transactionMapper::mapToTransactionRs);
   }
 
   @Override
@@ -79,7 +87,7 @@ public class TransactionServiceImpl implements TransactionService {
 
   @Transactional(readOnly = true)
   public Transaction getTransactionById(UUID transactionId) {
-    return transactionRepository.getTransactionsByIdForCurrentUser(transactionId)
+    return transactionRepository.findById(transactionId)
         .orElseThrow(() -> new TransactionNotFoundException(String.format(TRANSACTION_NOT_FOUND, transactionId)));
   }
 }

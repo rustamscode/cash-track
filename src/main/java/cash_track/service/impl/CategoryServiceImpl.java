@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static cash_track.util.ExceptionMessageUtil.CATEGORY_ALREADY_EXISTS_BY_NAME;
-import static cash_track.util.ExceptionMessageUtil.CATEGORY_NOT_FOUND_BY_ID;
-import static cash_track.util.LogMessageUtil.SAVING_IN_DB_LOG;
+import static cash_track.util.message.ExceptionMessageUtil.CATEGORY_ALREADY_EXISTS_BY_NAME;
+import static cash_track.util.message.ExceptionMessageUtil.CATEGORY_NOT_FOUND_BY_ID;
+import static cash_track.util.message.LogMessageUtil.SAVING_IN_DB_LOG;
 
 @Slf4j
 @Service
