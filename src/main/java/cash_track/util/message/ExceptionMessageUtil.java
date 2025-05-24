@@ -21,4 +21,9 @@ public class ExceptionMessageUtil {
   public static final String SEARCH_OPERATION_IS_NULL = "Search operation must not be null";
 
   public static final String AUTHENTICATION_CREDENTIALS_NOT_FOUND = "Authentication credentials were not found";
+
+  public static final String NOT_IMPLEMENTED = "No implementation found for called method";
+
+
+  public static final String FILE_UPLOAD_ERROR = "Failed to upload file: %s";
 }
