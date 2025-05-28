@@ -1,8 +1,10 @@
 package cash_track.controller;
 
 import cash_track.dto.request.TransactionCreateRq;
+import cash_track.dto.request.TransactionExportRq;
 import cash_track.dto.request.TransactionSearchRq;
 import cash_track.dto.request.TransactionUpdateRq;
+import cash_track.dto.response.ExportTaskRs;
 import cash_track.dto.response.ResponseDto;
 import cash_track.dto.response.TransactionRs;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,4 +50,9 @@ public interface TransactionController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @Operation(summary = "Delete transaction")
   ResponseDto<Void> deleteTransaction(@PathVariable UUID id);
+
+  @PostMapping("/export/initiate")
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @Operation(summary = "Export transactions")
+  ResponseDto<ExportTaskRs> initiateTransactionsExport(@RequestBody @Valid TransactionExportRq request);
 }
