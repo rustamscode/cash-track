@@ -8,6 +8,7 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
     <include file="feat-1.xml" relativeToChangelogFile="true"/>
     <include file="feat-2.xml" relativeToChangelogFile="true"/>
+    <include file="feat-6.xml" relativeToChangelogFile="true"/>
 
 
 </databaseChangeLog>

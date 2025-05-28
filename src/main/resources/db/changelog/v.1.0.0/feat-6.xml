@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-table-export_tasks" author="Rustamscode">
+        <createTable tableName="export_tasks"
+                     remarks="Stores data about export_tasks">
+
+            <column name="id" type="UUID" remarks="Export task ID (UUID)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_export_tasks"/>
+            </column>
+
+            <column name="user_id" type="UUID" remarks="User ID (UUID)">
+                <constraints nullable="false" foreignKeyName="fk_export_tasks_users"
+                             referencedTableName="users" referencedColumnNames="id" deleteCascade="true"/>
+            </column>
+
+            <column name="status" type="VARCHAR(32)" remarks="Export task status">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="params" type="JSONB" remarks="Export parameters, stored as json">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="format" type="VARCHAR(32)" remarks="Export file format">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="progress_percentage" type="INT" remarks="File processing progress percentage"/>
+
+            <column name="file_key" type="VARCHAR(256)" remarks="Key for file storage">
+                <constraints unique="true"/>
+            </column>
+
+            <column name="file_size" type="bigint" remarks="File size"/>
+
+            <column name="error_message" type="VARCHAR(1024)" remarks="Error message"/>
+
+            <column name="created_date" type="TIMESTAMPTZ" remarks="Export task date and time">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_modified_date" type="TIMESTAMP"
+                    remarks="Export task last modified date">
+            </column>
+
+            <column name="is_deleted" type="BOOLEAN"
+                    remarks="Export task deletion status for soft deletes">
+            </column>
+
+            <column name="version" type="BIGINT"
+                    remarks="Version for optimistic locking (JPA)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="export_tasks" indexName="idx_user_export_task">
+            <column name="user_id"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>
