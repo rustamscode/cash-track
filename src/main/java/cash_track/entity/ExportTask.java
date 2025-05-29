@@ -46,10 +46,6 @@ public class ExportTask extends BaseEntity {
   @Column(name = "params", columnDefinition = "jsonb", nullable = false, updatable = false)
   private ExportParams params;
 
-  @Column(name = "format", nullable = false, updatable = false)
-  @Enumerated(EnumType.STRING)
-  private ExportFormat format;
-
   @Column(name = "progress_percentage")
   private Integer progressPercentage;
 

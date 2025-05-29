@@ -27,10 +27,6 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="format" type="VARCHAR(32)" remarks="Export file format">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="progress_percentage" type="INT" remarks="File processing progress percentage"/>
 
             <column name="file_key" type="VARCHAR(256)" remarks="Key for file storage">
