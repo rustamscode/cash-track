@@ -11,8 +11,8 @@ import static cash_track.util.helper.UserHelper.currentUsername;
 @UtilityClass
 public class FileHelper {
 
-  public static String getOriginalFileNameOrDefault(String file, String defaultName) {
-    return file.getOriginalFilename() == null ? defaultName : file.getName();
+  public static String getOriginalFileNameOrDefault(String fileName, String defaultName) {
+    return fileName == null ? defaultName : fileName;
   }
 
   public static String getFileExtension(String fileName) {
@@ -27,7 +27,6 @@ public class FileHelper {
     sb.append(currentUsername());
     sb.append(UNDERSCORE);
     sb.append(LocalDateTime.now());
-    sb.append(UNDERSCORE);
     sb.append(extension);
 
     return sb.toString();
