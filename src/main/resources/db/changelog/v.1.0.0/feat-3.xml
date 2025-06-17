@@ -6,9 +6,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
-    <changeSet id="create-table-imports" author="Rustamscode">
-        <createTable tableName="imports"
-                     remarks="Stores metadata and status for file imports. Each row represents a single import attempt.">
+    <changeSet id="create-table-import_tasks" author="Rustamscode">
+        <createTable tableName="import_tasks"
+                     remarks="Stores metadata and status for file import tasks. Each row represents a single import attempt.">
             <column name="id" type="UUID" remarks="Primary identifier for the import task">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

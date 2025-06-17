@@ -28,8 +28,8 @@ import java.time.OffsetDateTime;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 
 @Entity
-@Table(name = "imports")
-public class Import extends BaseEntity {
+@Table(name = "import_tasks")
+public class ImportTask extends BaseEntity {
 
   @EqualsAndHashCode.Include
   @Column(name = "key", nullable = false, unique = true)
