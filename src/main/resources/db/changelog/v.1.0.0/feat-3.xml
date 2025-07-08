@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-table-import_tasks" author="Rustamscode">
+        <createTable tableName="import_tasks"
+                     remarks="Stores metadata and status for file import tasks. Each row represents a single import attempt.">
+            <column name="id" type="UUID" remarks="Primary identifier for the import task">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="key" type="VARCHAR(256)"
+                    remarks="The key of the object stored in S3 for this import">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="status" type="VARCHAR(50)"
+                    remarks="Current status of the import process (e.g., PENDING, PROCESSING, COMPLETED_SUCCESS, FAILED)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="submitted_at" type="TIMESTAMP WITH TIME ZONE"
+                    remarks="Timestamp when the import task was submitted/created">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="started_at" type="TIMESTAMP WITH TIME ZONE"
+                    remarks="Timestamp when the actual file processing started by the job">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="completed_at" type="TIMESTAMP WITH TIME ZONE"
+                    remarks="Timestamp when the file processing completed (successfully or with failure)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="user_id" type="UUID"
+                    remarks="Identifier of the user who initiated the import">
+                <constraints nullable="false" foreignKeyName="fk_import_user"
+                             referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+
+            <column name="message" type="VARCHAR(512)" remarks="Import task status message">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_date" type="TIMESTAMP WITH TIME ZONE"
+                    remarks="User creation date and time">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_modified_date" type="TIMESTAMP WITH TIME ZONE"
+                    remarks="User last modified date">
+            </column>
+
+            <column name="is_deleted" type="BOOLEAN"
+                    remarks="Transaction deletion status for soft deletes">
+            </column>
+
+            <column name="version" type="BIGINT"
+                    remarks="Version for optimistic locking (JPA)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="idx_imports_user_id" tableName="imports">
+            <column name="user_id"
+                    remarks="Index for querying imports by user_id, if user_id is present and used for filtering."/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
